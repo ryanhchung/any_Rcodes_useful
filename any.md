@@ -1,6 +1,6 @@
-'''r
+``` r
 mat <- read.csv("rna_tpm_log2.csv", row.names = 1)
-'''
+```
 
 ############Generating data frame for visualization#######
 
