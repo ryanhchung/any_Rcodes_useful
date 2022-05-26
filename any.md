@@ -34,8 +34,9 @@ a <- p + theme(panel.border = element_blank(), axis.line = element_line(colour =
 a + stat_compare_means( aes(label = ..p.signif..),) + stat_compare_means(size = 5)
 ```
 
-``` r
+
 ##################Visualization of all elements - In this case, Descending Order######################
+``` r
 p <- ggplot(test) + 
   geom_boxplot(aes(x= reorder(Cell, -Expression_Level), y = Expression_Level), ) +
   ggtitle("HMGCR") +
