@@ -2,9 +2,9 @@
 mat <- read.csv("rna_tpm_log2.csv", row.names = 1)
 ```
 
-############Generating data frame for visualization#######
+Generating data frame for visualization
 
-'''r
+``` r
 test <- mat["PDK1",]
 test <- stack(as.data.frame(test))
 test$ind <- colnames(mat)
@@ -15,10 +15,10 @@ write.csv(test, "PDK1.csv")
 
 library(ggplot2)
 library(ggpubr)
-'''
+```
 
-###################Compare between groups (Type) + wilcox-rank sum test##############
-'''r
+Compare between groups (Type) + wilcox-rank sum test
+``` r
 p <- ggboxplot(test, x = "Type", y = "Expression_Level", ylab = "Expression_Level",fill = "Type", 
                title = "HMGCR") + 
   theme(axis.text.y=element_text(size=30),
@@ -32,9 +32,9 @@ a <- p + theme(panel.border = element_blank(), axis.line = element_line(colour =
                panel.background = element_rect(fill = "transparent", color = "white"))
 
 a + stat_compare_means( aes(label = ..p.signif..),) + stat_compare_means(size = 5)
-'''
+```
 
-'''r
+``` r
 ##################Visualization of all elements - In this case, Descending Order######################
 p <- ggplot(test) + 
   geom_boxplot(aes(x= reorder(Cell, -Expression_Level), y = Expression_Level), ) +
@@ -49,5 +49,5 @@ a <- p + theme(panel.border = element_blank(), axis.line = element_line(colour =
                panel.grid.major = element_blank(),panel.grid.minor = element_blank(),
                plot.background = element_rect(fill = "transparent", color = "white"),
                panel.background = element_rect(fill = "transparent", color = "white"))
-'''
+```
                
