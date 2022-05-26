@@ -51,4 +51,29 @@ a <- p + theme(panel.border = element_blank(), axis.line = element_line(colour =
                plot.background = element_rect(fill = "transparent", color = "white"),
                panel.background = element_rect(fill = "transparent", color = "white"))
 ```
-               
+
+Heatmap between two groups
+``` r
+coldata <- data.frame(matrix(0, ncol = 2, nrow = ncol(mat)))
+colnames(coldata) <- c("Cell", "Type")
+coldata$Cell <- colnames(mat)
+coldata$Type <- ifelse(coldata$Cell %in% c("MKN1", "Hs746T", "SNU484", "SNU668", "YCC16", "YCC11", "SK4", "SNU1750"), "SEM", "nSEM")
+
+colours <- list('Type' = c('SEM' = 'red2', 'nSEM' = 'royalblue'))
+colAnn <- HeatmapAnnotation(df = coldata$Type,
+                            which = 'col',
+                            col = colours,
+                            annotation_width = unit(c(1, 4), 'cm'),
+                            gap = unit(1, 'mm'),
+                            simple_anno_size = unit(0.1, "cm"))
+split <- factor(paste0("", coldata$Type))
+library(circlize)
+library(ComplexHeatmap)
+
+mat_scaled <- t(scale(t(mat)))
+#cairo_pdf("/Users/ryanmachine/Datadriven/kmeans(5).pdf", height = 6, width = 8)
+Heatmap(as.matrix(mat_scaled), name = "Z-score", 
+        top_annotation = colAnn, column_split = coldata$Type,
+        row_names_gp = gpar(fontsize = 11), column_names_gp = gpar(fontsize = 11), show_row_names = TRUE, 
+        show_column_dend = FALSE, use_raster = TRUE, raster_by_magick = TRUE, raster_quality = 2)
+```
